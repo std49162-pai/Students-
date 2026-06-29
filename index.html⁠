@@ -3,143 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCAS Score Calculator & Predictor</title>
+    <title>TCAS Hub - เว็บไซต์เพื่อเด็ก ม.6</title>
     <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'ChulaCharasNew', 'Helvetica Neue', Arial, sans-serif;
+        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+            background-color: #f0f4f8;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #ff7675, #6c5ce7);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
         }
         .container {
-            max-width: 600px;
+            max-width: 1000px;
+            margin: -30px auto 40px auto;
+            padding: 0 20px;
+        }
+        .card {
             background: white;
-            margin: 0 auto;
+            border-radius: 16px;
             padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
         h2 {
-            color: #2c3e50;
+            color: #2d3436;
+            margin-top: 0;
+            border-left: 5px solid #6c5ce7;
+            padding-left: 10px;
+        }
+        /* Countdown Section */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .time-box {
+            background: #ffeaa7;
+            padding: 15px 25px;
+            border-radius: 8px;
             text-align: center;
-            margin-bottom: 25px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
+            font-size: 24px;
             font-weight: bold;
-            color: #34495e;
+            color: #d63031;
         }
-        input[type="number"], select {
+        .time-box span {
+            display: block;
+            font-size: 14px;
+            color: #636e72;
+        }
+        /* Grid Layout for Info & Calc */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+        /* Form & Inputs */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #dfe6e9;
+            border-radius: 8px;
             font-size: 16px;
         }
         button {
             width: 100%;
-            padding: 12px;
-            background-color: #3498db;
+            padding: 14px;
+            background: #6c5ce7;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 18px;
             cursor: pointer;
-            transition: background 0.3s;
+            font-weight: bold;
         }
-        button:hover {
-            background-color: #2980b9;
-        }
-        .result-box {
-            margin-top: 30px;
-            padding: 20px;
+        button:hover { background: #5b4cc4; }
+        /* Result Box */
+        .result {
+            margin-top: 20px;
+            padding: 15px;
             border-radius: 8px;
             text-align: center;
             display: none;
+            font-weight: bold;
         }
-        .safe { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .risk { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
-        .danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        /* Faculty Cards */
+        .fac-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .fac-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff7675;
+        }
     </style>
 </head>
 <body>
 
+<header>
+    <h1>🎯 TCAS Platform For Dek 69-70</h1>
+    <p>เพื่อนคู่คิดสำหรับเด็ก ม.ปลาย ที่กำลังจะเข้ามหาวิทยาลัย</p>
+</header>
+
 <div class="container">
-    <h2>🧮 ระบบคำนวณคะแนน & ประเมินโอกาสติด</h2>
     
-    <div class="form-group">
-        <label for="faculty">เลือกคณะที่สนใจ:</label>
-        <select id="faculty">
-            <option value="engineering">คณะวิศวกรรมศาสตร์ (คะแนนต่ำสุดปีที่แล้ว: 60)</option>
-            <option value="comsci">คณะวิทยาศาสตร์ คอมพิวเตอร์ (คะแนนต่ำสุดปีที่แล้ว: 55)</option>
-            <option value="arts">คณะอักษรศาสตร์ (คะแนนต่ำสุดปีที่แล้ว: 68)</option>
-        </select>
+    <div class="card" style="text-align: center;">
+        <h2>⏳ นับถอยหลังสู่สนามสอบ TGAT/TPAT</h2>
+        <div class="countdown-container">
+            <div class="time-box"><div id="days">00</div><span>วัน</span></div>
+            <div class="time-box"><div id="hours">00</div><span>ชั่วโมง</span></div>
+            <div class="time-box"><div id="minutes">00</div><span>นาที</span></div>
+        </div>
+        <p style="color: #636e72; margin-top: 15px;">💡 สิ่งที่ควรเก็บตอนนี้: ลุยทำโจทย์เก่าภาษาอังกฤษ และพาร์ทคิดวิเคราะห์เบื้องต้น!</p>
     </div>
 
-    <div class="form-group">
-        <label for="tgat">คะแนน TGAT (เต็ม 100):</label>
-        <input type="number" id="tgat" min="0" max="100" placeholder="เช่น 65.5">
+    <div class="grid">
+        <div class="card">
+            <h2>🧮 คำนวณโอกาสสอบติด</h2>
+            <div class="form-group">
+                <label>เลือกคณะเป้าหมาย:</label>
+                <select id="faculty">
+                    <option value="60">คณะวิศวกรรมศาสตร์ (คะแนนต่ำสุดปีก่อน: 60)</option>
+                    <option value="55">คณะวิทยาศาสตร์ (คะแนนต่ำสุดปีก่อน: 55)</option>
+                    <option value="65">คณะพาณิชยศาสตร์และการบัญชี (คะแนนต่ำสุดปีก่อน: 65)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>คะแนน TGAT (เต็ม 100):</label>
+                <input type="number" id="tgat" placeholder="กรอกคะแนน">
+            </div>
+            <div class="form-group">
+                <label>คะแนน A-Level เฉลี่ย (เต็ม 100):</label>
+                <input type="number" id="alevel" placeholder="กรอกคะแนน">
+            </div>
+            <button onclick="calScore()">คำนวณคะแนน</button>
+            <div id="resultBox" class="result"></div>
+        </div>
+
+        <div class="card">
+            <h2>ℹ️ ข้อมูลคณะน่าสนใจ</h2>
+            <div class="fac-list">
+                <div class="fac-item">
+                    <strong style="color: #6c5ce7;">💻 วิศวะคอมพิวเตอร์</strong><br>
+                    • เรียน 4 ปี<br>
+                    • ค่าเทอม: ~25,000 บาท/เทอม<br>
+                    • เน้น: เขียนโค้ด, พัฒนาระบบ
+                </div>
+                <div class="fac-item">
+                    <strong style="color: #6c5ce7;">📈 บริหารธุรกิจ</strong><br>
+                    • เรียน 4 ปี<br>
+                    • ค่าเทอม: ~20,000 บาท/เทอม<br>
+                    • เน้น: การตลาด, การเงิน, จัดการ
+                </div>
+                <div class="fac-item">
+                    <strong style="color: #ff7675;">🩺 แพทยศาสตร์</strong><br>
+                    • เรียน 6 ปี<br>
+                    • ค่าเทอม: ~30,000-50,000 บาท<br>
+                    • เน้น: วิทยาศาสตร์การแพทย์, รักษาคน
+                </div>
+                <div class="fac-item">
+                    <strong style="color: #ff7675;">🎨 มัณฑนศิลป์ / ออกแบบ</strong><br>
+                    • เรียน 4 ปี<br>
+                    • ค่าเทอม: ~28,500 บาท<br>
+                    • เน้น: วาดรูป, ออกแบบ, ความคิดสร้างสรรค์
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label for="alevel">คะแนน A-Level เฉลี่ย (เต็ม 100):</label>
-        <input type="number" id="alevel" min="0" max="100" placeholder="เช่น 58.0">
-    </div>
-
-    <button onclick="calculateScore()">คำนวณโอกาสสอบติด</button>
-
-    <div id="result" class="result-box">
-        <h3 id="score-display">คะแนนของคุณ: 0.00</h3>
-        <p id="status-display"></p>
-    </div>
 </div>
 
 <script>
-    function calculateScore() {
-        // 1. ดึงค่าจากฟอร์ม
-        const faculty = document.getElementById('faculty').value;
-        const tgat = parseFloat(document.getElementById('tgat').value) || 0;
-        const alevel = parseFloat(document.getElementById('alevel').value) || 0;
+    // --- ฟังก์ชันคำนวณคะแนน ---
+    function calScore() {
+        let target = parseFloat(document.getElementById('faculty').value);
+        let tgat = parseFloat(document.getElementById('tgat').value) || 0;
+        let alevel = parseFloat(document.getElementById('alevel').value) || 0;
         
-        // 2. สมมติสูตรคำนวณ: คิดจาก TGAT 40% + A-Level 60%
-        let myScore = (tgat * 0.4) + (alevel * 0.6);
-        myScore = myScore.toFixed(2);
+        // สมมติค่าน้ำหนัก: TGAT 50% + A-Level 50%
+        let total = (tgat * 0.5) + (alevel * 0.5);
         
-        // 3. กำหนดคะแนนต่ำสุดของแต่ละคณะ (เกณฑ์สมมติ)
-        let baseScore = 0;
-        if (faculty === 'engineering') baseScore = 60;
-        else if (faculty === 'comsci') baseScore = 55;
-        else if (faculty === 'arts') baseScore = 68;
+        let res = document.getElementById('resultBox');
+        res.style.display = "block";
         
-        // 4. ประมวลผลและแสดงผลลัพธ์
-        const resultBox = document.getElementById('result');
-        const scoreDisplay = document.getElementById('score-display');
-        const statusDisplay = document.getElementById('status-display');
-        
-        resultBox.style.display = 'block';
-        scoreDisplay.innerHTML = `คะแนนเฉลี่ยสะสมของคุณคือ: <strong>${myScore}</strong>`;
-        
-        // ล้าง class เก่าออกก่อน
-        resultBox.className = 'result-box';
-        
-        // เทียบโอกาสติด
-        if (myScore >= baseScore + 5) {
-            resultBox.classList.add('safe');
-            statusDisplay.innerHTML = "🎉 โอกาสติดสูงมาก! คะแนนคุณปลอดภัยเมื่อเทียบกับปีที่แล้ว";
-        } else if (myScore >= baseScore - 2) {
-            resultBox.classList.add('risk');
-            statusDisplay.innerHTML = "⚖️ ลุ้นเหนื่อยหน่อย! คะแนนคุณปริ่ม ๆ กับคะแนนต่ำสุดปีก่อน";
+        if (total >= target) {
+            res.style.backgroundColor = "#d4edda";
+            res.style.color = "#155724";
+            res.innerHTML = `คะแนนของคุณ: ${total.toFixed(2)} ยินดีด้วย มีโอกาสติดสูงมาก!`;
         } else {
-            resultBox.classList.add('danger');
-            statusDisplay.innerHTML = "🚨 เสี่ยงมาก! แนะนำให้เร่งอ่านหนังสือเพิ่มคะแนนในรอบถัดไป";
+            res.style.backgroundColor = "#f8d7da";
+            res.style.color = "#721c24";
+            res.innerHTML = `คะแนนของคุณ: ${total.toFixed(2)} ยังต่ำกว่าเกณฑ์ปีก่อน พยายามอีกนิดนะ!`;
         }
     }
+
+    // --- ฟังก์ชันนับถอยหลัง (สมมติวันสอบคือช่วงธันวาคมของทุกปี) ---
+    function updateCountdown() {
+        // ตั้งเป้าหมายเป็นปลายปีนี้ (คุณปรับเปลี่ยนวันที่ตรงนี้ได้)
+        const targetDate = new Date("December 10, 2026 09:00:00").getTime();
+        const now = new Date().getTime();
+        const difference = targetDate - now;
+
+        const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+
+        document.getElementById('days').innerText = d > 0 ? d : 0;
+        document.getElementById('hours').innerText = h > 0 ? h : 0;
+        document.getElementById('minutes').innerText = m > 0 ? m : 0;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 </script>
 
 </body>
