@@ -3,287 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEK-DASHBOARD // ม.6 ต้องรอด</title>
+    <title>TCAS Dashboard - ระบบช่วยเหลือเด็ก ม.6</title>
     <style>
+        /* กำหนดค่าสีหลักของเว็บไซต์ (Theme) */
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #151f32;
-            --accent-purple: #6c5ce7;
-            --accent-pink: #ff7675;
-            --text-main: #ffffff;
-            --text-muted: #8fa0dd;
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Kanit', -apple-system, sans-serif;
+            font-family: 'Kanit', sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             padding: 20px;
         }
 
-        .wrapper {
+        .container {
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* Header */
+        /* ส่วนหัวข้อเว็บ */
         header {
             text-align: center;
-            padding: 40px 0;
+            padding: 30px 0;
         }
 
         header h1 {
             font-size: 2.5rem;
-            background: linear-gradient(45deg, #ff7675, #6c5ce7);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
         }
 
-        header p {
-            color: var(--text-muted);
-        }
-
-        /* Main Grid */
-        .main-grid {
+        /* การจัดวางแบบ Grid แยกซ้าย-ขวา */
+        .main-layout {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 20px;
+            gap: 25px;
+            margin-top: 20px;
         }
 
         @media (max-width: 900px) {
-            .main-grid { grid-template-columns: 1fr; }
+            .main-layout { grid-template-columns: 1fr; }
         }
 
+        /* กล่องเนื้อหาต่างๆ */
         .card {
-            background: var(--card-bg);
+            background-color: var(--card-dark);
             border-radius: 16px;
             padding: 25px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 25px;
         }
 
         h2 {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            color: var(--text-light);
+            border-left: 4px solid var(--primary);
+            padding-left: 10px;
         }
 
-        /* Countdown */
-        .countdown-widget {
-            display: flex;
-            justify-content: space-around;
-            background: rgba(0,0,0,0.2);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .time-unit {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--accent-pink);
-        }
-
-        .time-unit span {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* Calculator Form */
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
+        /* ปุ่มและฟอร์มรับค่า */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: 0.9rem; }
         input, select {
-            width: 100%;
-            padding: 12px;
-            background: #0b0f19;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: white;
-            font-size: 1rem;
-        }
-
-        input:focus, select:focus {
-            outline: 1px solid var(--accent-purple);
+            width: 100%; padding: 12px; background: #0f172a;
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+            color: white; font-size: 1rem;
         }
 
         button {
-            width: 100%;
-            padding: 14px;
-            background: var(--accent-purple);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
+            width: 100%; padding: 12px; background: var(--primary);
+            color: white; border: none; border-radius: 8px;
+            font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s;
+        }
+        button:hover { background: #4f46e5; }
+
+        /* ระบบนับเวลาถอยหลัง */
+        .timer-display {
+            display: flex; justify-content: space-around;
+            background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px;
+        }
+        .time-node { font-size: 1.8rem; font-weight: bold; color: var(--secondary); text-align: center; }
+        .time-node span { display: block; font-size: 0.8rem; color: var(--text-muted); }
+
+        /* ผลลัพธ์ */
+        .box-result {
+            margin-top: 15px; padding: 15px; border-radius: 8px;
+            text-align: center; font-weight: bold; display: none;
         }
 
-        button:hover {
-            background: #5b4cc4;
-            transform: translateY(-2px);
+        /* คลังข้อมูลคณะ */
+        .faculty-info {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 10px 0;
         }
-
-        .result-panel {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
-            display: none;
-        }
-
-        /* Info List */
-        .info-item {
-            background: rgba(255,255,255,0.02);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border-left: 4px solid var(--accent-purple);
-        }
-
-        .info-item h4 { color: var(--accent-pink); margin-bottom: 5px; }
-        .info-item p { font-size: 0.9rem; color: var(--text-muted); }
-
+        .faculty-info:last-child { border: none; }
+        .faculty-title { color: var(--secondary); font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
+<div class="container">
     <header>
-        <h1>⚡ DEK-DASHBOARD</h1>
-        <p>รวมทุกเครื่องมือสำหรับเด็ก ม.6 ที่จะสอบเข้ามหาวิทยาลัย</p>
+        <h1>🎯 TCAS & ม.6 ALL-IN-ONE HUB</h1>
+        <p style="color: var(--text-muted);">โปรเจกต์เว็บรวมเครื่องมือช่วยเหลือสำหรับนักเรียนชั้น ม.6</p>
     </header>
 
-    <div class="main-grid">
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-            
+    <div class="main-layout">
+        
+        <div>
             <div class="card">
-                <h2>🧮 ระบบคำนวณคะแนน TCAS (สูตรจำลอง)</h2>
+                <h2>🧮 ระบบคำนวณคะแนน & ประเมินโอกาสติด</h2>
                 <div class="form-group">
-                    <label>เลือกกลุ่มคณะที่อยากเข้า</label>
-                    <select id="targetGroup">
-                        <option value="55">สายวิทย์-คอมพิวเตอร์ / ไอที (เกณฑ์คะแนนขั้นต่ำปีก่อน: 55)</option>
-                        <option value="62">สายวิศวกรรมศาสตร์ (เกณฑ์คะแนนขั้นต่ำปีก่อน: 62)</option>
-                        <option value="65">สายบริหาร / บัญชี (เกณฑ์คะแนนขั้นต่ำปีก่อน: 65)</option>
+                    <label>เลือกคณะเป้าหมาย</label>
+                    <select id="facultySelect">
+                        <option value="60">คณะวิศวกรรมศาสตร์ (เกณฑ์ขั้นต่ำปีล่าสุด: 60 คะแนน)</option>
+                        <option value="55">คณะวิทยาศาสตร์/ไอที (เกณฑ์ขั้นต่ำปีล่าสุด: 55 คะแนน)</option>
+                        <option value="65">คณะบัญชี/บริหาร (เกณฑ์ขั้นต่ำปีล่าสุด: 65 คะแนน)</option>
                     </select>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div class="form-group">
                         <label>คะแนน TGAT (เต็ม 100)</label>
-                        <input type="number" id="tgatScore" placeholder="กรอกคะแนน">
+                        <input type="number" id="tgatInput" placeholder="เช่น 65">
                     </div>
                     <div class="form-group">
                         <label>คะแนน A-Level เฉลี่ย (เต็ม 100)</label>
-                        <input type="number" id="alevelScore" placeholder="กรอกคะแนน">
+                        <input type="number" id="alevelInput" placeholder="เช่น 58">
                     </div>
                 </div>
-                <button onclick="checkChance()">ประเมินโอกาสสอบติด</button>
-                <div id="resultDisplay" class="result-panel"></div>
+                <button onclick="calculateTCAS()">คำนวณผลลัพธ์</button>
+                <div id="calcResult" class="box-result"></div>
             </div>
 
             <div class="card">
-                <h2>📚 Checklist บทเรียนห้ามพลาด (Test Blueprint)</h2>
-                <div class="info-item">
-                    <h4>วิชา TGAT1 (English Communication)</h4>
-                    <p>เน้นเก็บ: Reading Comprehension และ Speaking Skill ออกสอบสัดส่วนเยอะที่สุด</p>
+                <h2>🧠 แบบทดสอบ: คุณเหมาะกับคณะสายไหน?</h2>
+                <div class="form-group">
+                    <label>1. วิชาที่คุณชอบเรียนหรือทำได้ดีที่สุดคือวิชาอะไร?</label>
+                    <select id="q1">
+                        <option value="sc">วิทยาศาสตร์ / คณิตศาสตร์</option>
+                        <option value="art">ภาษาไทย / ภาษาต่างประเทศ / สังคม</option>
+                        <option value="biz">คิดเลข / บริหารจัดการเงิน / วางแผน</option>
+                    </select>
                 </div>
-                <div class="info-item">
-                    <h4>วิชา A-Level คณิตศาสตร์ 1</h4>
-                    <p>เน้นเก็บ: สถิติและข้อมูล, แคลคูลัสเบื้องต้น เป็นกลุ่มบทโกยคะแนนของทุกปี</p>
+                <div class="form-group">
+                    <label>2. งานอดิเรกหรืองานแบบไหนที่ทำแล้วมีความสุข?</label>
+                    <select id="q2">
+                        <option value="sc">ทดลองสิ่งใหม่ / ซ่อมแซมสิ่งของ / เขียนโปรแกรม</option>
+                        <option value="art">วาดรูป / อ่านหนังสือ / เขียนบทความ / ดูหนังต่างประเทศ</option>
+                        <option value="biz">ขายของออนไลน์ / คิดไอเดียธุรกิจ / ชอบพูดคุยเจรจา</option>
+                    </select>
                 </div>
+                <button onclick="analyzePersonality()">ส่งคำตอบเพื่อวิเคราะห์</button>
+                <div id="quizResult" class="box-result" style="background-color: #334155; color: white;"></div>
             </div>
-
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-            
+        <div>
             <div class="card">
-                <h2>⏳ นับถอยหลังวันสอบ (TGAT/TPAT)</h2>
-                <div class="countdown-widget">
-                    <div class="time-unit"><div id="d">00</div><span>วัน</span></div>
-                    <div class="time-unit"><div id="h">00</div><span>ชั่วโมง</span></div>
-                    <div class="time-unit"><div id="m">00</div><span>นาที</span></div>
+                <h2>⏳ นับถอยหลังสู่สนามสอบ TGAT</h2>
+                <div class="timer-display">
+                    <div class="time-node"><div id="dayNode">00</div><span>วัน</span></div>
+                    <div class="time-node"><div id="hourNode">00</div><span>ชม.</span></div>
+                    <div class="time-node"><div id="minNode">00</div><span>นาที</span></div>
                 </div>
+                <p style="margin-top: 15px; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+                    💡 ข้อแนะนำ: ควรเก็บเนื้อหาและเริ่มลุยโจทย์เก่าได้แล้ว!
+                </p>
             </div>
 
             <div class="card">
-                <h2>🔍 ข้อมูลคณะด่วน</h2>
-                <div class="info-item" style="border-left-color: var(--accent-pink);">
-                    <h4>คณะวิศวกรรมศาสตร์</h4>
-                    <p>เรียน 4 ปี | ค่าเทอมเฉลี่ย: 25,000 บ.</p>
+                <h2>📋 ข้อมูลคณะและค่าเทอมเบื้องต้น</h2>
+                <div class="faculty-info">
+                    <p class="faculty-title">💻 คณะวิศวกรรมศาสตร์</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">ระยะเวลาเรียน: 4 ปี | ค่าเทอมประมาณ: 25,000 บ./เทอม</p>
                 </div>
-                <div class="info-item" style="border-left-color: var(--accent-pink);">
-                    <h4>คณะพาณิชยศาสตร์และการบัญชี</h4>
-                    <p>เรียน 4 ปี | ค่าเทอมเฉลี่ย: 20,000 บ.</p>
+                <div class="faculty-info">
+                    <p class="faculty-title">📈 คณะพาณิชยศาสตร์และการบัญชี</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">ระยะเวลาเรียน: 4 ปี | ค่าเทอมประมาณ: 20,000 บ./เทอม</p>
                 </div>
-                <div class="info-item" style="border-left-color: var(--accent-pink);">
-                    <h4>คณะแพทยศาสตร์</h4>
-                    <p>เรียน 6 ปี | ค่าเทอมเฉลี่ย: 40,000 บ.</p>
+                <div class="faculty-info">
+                    <p class="faculty-title">🩺 คณะแพทยศาสตร์</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">ระยะเวลาเรียน: 6 ปี | ค่าเทอมประมาณ: 40,000 บ./เทอม</p>
                 </div>
             </div>
-
         </div>
+
     </div>
 </div>
 
 <script>
-    // คำนวณคะแนน
-    function checkChance() {
-        const target = parseFloat(document.getElementById('targetGroup').value);
-        const tgat = parseFloat(document.getElementById('tgatScore').value) || 0;
-        const alevel = parseFloat(document.getElementById('alevelScore').value) || 0;
+    // [1] ฟังก์ชันคำนวณคะแนน TCAS
+    function calculateTCAS() {
+        const targetScore = parseFloat(document.getElementById('facultySelect').value);
+        const tgat = parseFloat(document.getElementById('tgatInput').value) || 0;
+        const alevel = parseFloat(document.getElementById('alevelInput').value) || 0;
         
-        // คิดสัดส่วน 50/50
-        const myTotal = (tgat * 0.5) + (alevel * 0.5);
-        const display = document.getElementById('resultDisplay');
-        display.style.display = "block";
+        // สูตรคำนวณแบบจำลอง: คิดสัดส่วน TGAT 50% และ A-Level 50%
+        const finalScore = (tgat * 0.5) + (alevel * 0.5);
+        const resultBox = document.getElementById('calcResult');
+        resultBox.style.display = "block";
 
-        if (myTotal >= target) {
-            display.style.background = "#27ae60";
-            display.style.color = "#fff";
-            display.innerHTML = `คะแนนรวมของคุณ: ${myTotal.toFixed(2)} — [มีโอกาสติดสูงมาก]`;
+        // ตรวจสอบเงื่อนไขคะแนนเทียบกับเกณฑ์ขั้นต่ำ
+        if (finalScore >= targetScore) {
+            resultBox.style.backgroundColor = "#10b981"; // สีเขียว
+            resultBox.style.color = "#ffffff";
+            resultBox.innerHTML = `คะแนนของคุณคือ ${finalScore.toFixed(2)} [มีโอกาสสอบติดสูงมาก]`;
         } else {
-            display.style.background = "#c0392b";
-            display.style.color = "#fff";
-            display.innerHTML = `คะแนนรวมของคุณ: ${myTotal.toFixed(2)} — [ยังต่ำกว่าเกณฑ์ปีก่อน พยายามดึงคะแนนเพิ่มอีก]`;
+            resultBox.style.backgroundColor = "#ef4444"; // สีแดง
+            resultBox.style.color = "#ffffff";
+            resultBox.innerHTML = `คะแนนของคุณคือ ${finalScore.toFixed(2)} [ยังต่ำกว่าเกณฑ์ปีก่อน พยายามอีกนิด!]`;
         }
     }
 
-    // ระบบเวลานับถอยหลัง
-    function liveCountdown() {
-        const examDate = new Date("December 12, 2026 09:00:00").getTime();
-        const now = new Date().getTime();
-        const gap = examDate - now;
+    // [2] ฟังก์ชันวิเคราะห์แบบทดสอบความถนัด
+    function analyzePersonality() {
+        const q1 = document.getElementById('q1').value;
+        const q2 = document.getElementById('q2').value;
+        const resultBox = document.getElementById('quizResult');
+        resultBox.style.display = "block";
 
-        const days = Math.floor(gap / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
-
-        document.getElementById('d').innerText = days > 0 ? days : 0;
-        document.getElementById('h').innerText = hours > 0 ? hours : 0;
-        document.getElementById('m').innerText = minutes > 0 ? minutes : 0;
+        // ประมวลผลคำตอบ
+        if (q1 === 'sc' && q2 === 'sc') {
+            resultBox.innerHTML = "🎯 ผลวิเคราะห์: คุณเหมาะกับ [สายวิทย์-เทคโนโลยี] เช่น คณะวิศวกรรมศาสตร์, วิทยาศาสตร์คอมพิวเตอร์ หรือ แพทยศาสตร์";
+        } else if (q1 === 'art' && q2 === 'art') {
+            resultBox.innerHTML = "🎯 ผลวิเคราะห์: คุณเหมาะกับ [สายศิลป์-ภาษา/สังคม] เช่น คณะอักษรศาสตร์, นิเทศศาสตร์ หรือ นิติศาสตร์";
+        } else if (q1 === 'biz' || q2 === 'biz') {
+            resultBox.innerHTML = "🎯 ผลวิเคราะห์: คุณเหมาะกับ [สายบริหาร-คำนวณ] เช่น คณะพาณิชยศาสตร์และการบัญชี, เศรษฐศาสตร์ หรือ การตลาด";
+        } else {
+            resultBox.innerHTML = "🎯 ผลวิเคราะห์: คุณมีความสามารถแบบผสมผสาน! เหมาะกับคณะบูรณาการ เช่น เทคโนโลยีสารสนเทศ หรือ บริหารธุรกิจนานาชาติ";
+        }
     }
-    setInterval(liveCountdown, 1000);
-    liveCountdown();
+
+    // [3] ฟังก์ชันระบบนับเวลาถอยหลัง (Countdown Timer)
+    function startCountdown() {
+        // กำหนดวันสอบจำลอง (สามารถแก้ไขวันที่ตรงนี้ได้)
+        const examDate = new Date("December 12, 2026 09:00:00").getTime();
+        
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = examDate - now;
+
+            // คำนวณ วัน, ชั่วโมง, นาที จากมิลลิวินาที
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            // แสดงผลลงในหน้าเว็บ HTML
+            document.getElementById('dayNode').innerText = days > 0 ? days : 0;
+            document.getElementById('hourNode').innerText = hours > 0 ? hours : 0;
+            document.getElementById('minNode').innerText = minutes > 0 ? minutes : 0;
+        }, 1000);
+    }
+    
+    // เรียกใช้งานระบบนับถอยหลังทันทีเมื่อเปิดหน้าเว็บ
+    startCountdown();
 </script>
 
 </body>
